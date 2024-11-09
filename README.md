@@ -14,3 +14,7 @@ All the necessary software for this will be developed by us and you will be the 
 - You will also have the support of a Data Scientist and a Machine Learning Engineer. They will not participate in the entire process, but you can ask them for help on specific issues.
 
 Next, we would like you to answer a few questions to understand how you would approach the development process. Don't worry if you feel the questions are too open-ended or there isn't enough information to answer them. They are built precisely that way so that you can make all the assumptions you deem appropriate.
+
+## Architecture
+
+![Alt text](./architecture.png)
