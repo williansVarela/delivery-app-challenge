@@ -18,3 +18,13 @@ Next, we would like you to answer a few questions to understand how you would ap
 ## Architecture
 
 ![Alt text](./architecture.png)
+
+## Running the Project
+
+### Using Docker
+
+1. Build the Docker image:
+   `docker build . -t <your_image_name>`
+2. Build the Docker image:
+   `docker run <your_image_name> -p 8000:8000`
+3. Access `docker build . -t http://localhost:8000`
