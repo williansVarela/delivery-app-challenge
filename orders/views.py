@@ -23,7 +23,7 @@ class DistanceCalculatorView(View):
 
     def post(self, request):
         form = DistanceForm(request.POST)
-
+        error = None
         if form.is_valid():
             source = form.cleaned_data["source"]
             destination = form.cleaned_data["destination"]
@@ -33,7 +33,8 @@ class DistanceCalculatorView(View):
 
             if source_coords and destination_coords:
                 distance = self.get_distance(source_coords, destination_coords)
-                if distance:
+
+                if distance is not None:
                     DistanceQuery.objects.create(
                         source_address=source,
                         destination_address=destination,
@@ -45,23 +46,22 @@ class DistanceCalculatorView(View):
                         {
                             "form": form,
                             "result": f"Distance: {distance} km",
+                            "error": None,
                         },
                     )
                 else:
-                    return JsonResponse(
-                        {
-                            "error": "Could not fetch geolocation data for one or both addresses."
-                        }
-                    )
+                    error = "Fail to calculate the distance between the addresses. Please verify the addresses and try again."
             else:
-                return JsonResponse(
-                    {"error": "Invalid data. Please check the addresses and try again."}
-                )
+                error = "Could not fetch geolocation data for one or both addresses."
 
         else:
-            return JsonResponse(
-                {"error": "Invalid data. Please check the addresses and try again."}
-            )
+            error = "Invalid data. Please check the addresses and try again."
+
+        return render(
+            request,
+            "orders/delivery_distance.html",
+            {"form": form, "result": None, "error": error},
+        )
 
     def get_geolocation(self, address: str) -> tuple[float, float] | None:
         """
